@@ -4,6 +4,7 @@ Changelog
 4.0 (unreleased)
 ----------------
 
+- Add in code of `Products.TemporaryFolder` and `Products.ZODBMountPoint`.
 
 3.0 (2016-08-02)
 ----------------

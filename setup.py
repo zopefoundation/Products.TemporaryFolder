@@ -40,6 +40,10 @@ setup(
     ],
     install_requires=[
         'setuptools',
+        'AccessControl',
+        'Acquisition',
+        'tempstorage',
+        'ZODB',
         'Zope2 >= 4.0.dev0',
     ],
     include_package_data=True,
