@@ -14,25 +14,30 @@
 """Tests of ZODBMountPoint
 """
 
+import operator
 import os
 import os.path
 import sys
 import unittest
-import transaction
+
+import App.config
 from OFS.Application import Application
 from OFS.Folder import Folder
-import App.config
+import transaction
+from Zope2.Startup.datatypes import DBTab
+
 from Products.ZODBMountPoint.MountedObject import manage_addMounts
 from Products.ZODBMountPoint.MountedObject import getMountPoint
 from Products.ZODBMountPoint.MountedObject import manage_getMountStatus
-from Zope2.Startup.datatypes import DBTab
 
 try:
     __file__
 except NameError:
     __file__ = os.path.abspath(sys.argv[0])
 
-class TestDBConfig:
+
+class TestDBConfig(object):
+
     def __init__(self, fname, mpoints):
         self.fname = fname
         self.mpoints = mpoints
@@ -43,7 +48,7 @@ class TestDBConfig:
         from Zope2.Startup.datatypes import ZopeDatabase
         self.name = self.fname
         self.base = None
-        self.path = os.path.join(os.path.dirname(__file__),  self.fname)
+        self.path = os.path.join(os.path.dirname(__file__), self.fname)
         self.cache_size = 5000
         self.cache_size_bytes = 0
         self.class_factory = None
@@ -57,20 +62,22 @@ class TestDBConfig:
         self.historical_timeout = 300
         self.mount_points = self.mpoints
         self.pool_size = 7
-        self.pool_timeout = 1<<31
+        self.pool_timeout = 1 << 31
         self.quota = None
         self.read_only = None
         self.storage = DemoStorage(self)
         self.version_cache_size = 100
         self.version_pool_size = 3
         self.allow_implicit_cross_references = False
-        self.large_record_size = 1<<24
+        self.large_record_size = 1 << 24
         return ZopeDatabase(self)
 
     def getSectionName(self):
         return self.name
 
+
 original_config = None
+
 
 class MountingTests(unittest.TestCase):
 
@@ -161,6 +168,7 @@ class MountingTests(unittest.TestCase):
 
     def test_manage_getMountStatus(self):
         status = manage_getMountStatus(self.app)
+        name_sort = operator.itemgetter('name')
         expected = [{'status': 'Ok',
                      'path': '/mount1',
                      'name': 'test_mount1.fs',
@@ -174,7 +182,8 @@ class MountingTests(unittest.TestCase):
                      'name': 'test_mount3.fs',
                      'exists': 1},
                     ]
-        self.assertEqual(sorted(expected), sorted(status))
+        self.assertEqual(sorted(expected, key=name_sort),
+                         sorted(status, key=name_sort))
         del self.app.mount2
         status = manage_getMountStatus(self.app)
         expected = [{'status': 'Ok',
@@ -191,7 +200,8 @@ class MountingTests(unittest.TestCase):
                      'exists': 1},
 
                     ]
-        self.assertEqual(sorted(expected), sorted(status))
+        self.assertEqual(sorted(expected, key=name_sort),
+                         sorted(status, key=name_sort))
         self.app.mount2 = Folder('mount2')
         status = manage_getMountStatus(self.app)
         expected = [{'status': 'Ok',
@@ -207,7 +217,8 @@ class MountingTests(unittest.TestCase):
                      'name': 'test_mount3.fs',
                      'exists': 1},
                     ]
-        self.assertEqual(sorted(expected), sorted(status))
+        self.assertEqual(sorted(expected, key=name_sort),
+                         sorted(status, key=name_sort))
 
     def test_close(self):
         app = self.app
@@ -225,7 +236,3 @@ class MountingTests(unittest.TestCase):
         self.assertEqual(conn1.opened, None)
         self.assertEqual(conn2.opened, None)
         self.assertEqual(conn3.opened, None)
-
-
-def test_suite():
-    return unittest.makeSuite(MountingTests, 'test')

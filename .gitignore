@@ -2,6 +2,7 @@
 *.pyo
 *.egg-info
 .installed.cfg
+.tox/
 bin/
 build/
 develop-eggs/

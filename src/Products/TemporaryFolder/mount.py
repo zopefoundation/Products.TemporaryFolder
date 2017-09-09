@@ -15,7 +15,7 @@
 """
 
 import time
-import thread
+import threading
 import logging
 import persistent
 
@@ -23,9 +23,6 @@ from Acquisition import Implicit
 from Acquisition import ImplicitAcquisitionWrapper
 from Acquisition import aq_base
 from ZODB.POSException import StorageError
-
-class MountedStorageError(StorageError):
-    """Unable to access mounted storage."""
 
 logger = logging.getLogger('ZODB.Mount')
 
@@ -35,7 +32,11 @@ logger = logging.getLogger('ZODB.Mount')
 dbs = {}
 
 # dblock is locked every time dbs is accessed.
-dblock = thread.allocate_lock()
+dblock = threading._allocate_lock()
+
+
+class MountedStorageError(StorageError):
+    """Unable to access mounted storage."""
 
 
 def parentClassFactory(jar, module, name):
@@ -96,24 +97,21 @@ class MountPoint(persistent.Persistent, Implicit):
         '''Creates or opens a DB object.
         '''
         newMount = 0
-        dblock.acquire()
-        try:
+        with dblock:
             params = self._params
             dbInfo = dbs.get(params, None)
             if dbInfo is None:
                 logger.info('Opening database for mounting: %s', params)
                 db = self._createDB()
                 newMount = 1
-                dbs[params] = (db, {self.__mountpoint_id:1})
+                dbs[params] = (db, {self.__mountpoint_id: 1})
             else:
                 db, mounts = dbInfo
                 # Be sure this object is in the list of mount points.
-                if not mounts.has_key(self.__mountpoint_id):
+                if self.__mountpoint_id not in mounts:
                     newMount = 1
                     mounts[self.__mountpoint_id] = 1
             self._v_db = db
-        finally:
-            dblock.release()
         return db, newMount
 
     def _getMountpointId(self):
@@ -166,7 +164,7 @@ class MountPoint(persistent.Persistent, Implicit):
             try:
                 conn, newMount, mcc = self._openMountableConnection(parent)
                 data = self._getObjectFromConnection(conn)
-            except:
+            except Exception:
                 # Possibly broken database.
                 if mcc is not None:
                     # Note that the next line may be a little rash--
@@ -176,12 +174,14 @@ class MountPoint(persistent.Persistent, Implicit):
                     # prematurely.  Perhaps DB.py needs a
                     # countActiveConnections() method.
                     mcc.setCloseDb()
-                logger.warning('Failed to mount database. %s (%s)', 
-                                exc_info=True)
+                logger.warning('Failed to mount database. %s (%s)',
+                               exc_info=True)
                 raise
             if newMount:
-                try: id = data.getId()
-                except: id = '???'  # data has no getId() method.  Bad.
+                try:
+                    id = data.getId()
+                except Exception:
+                    id = '???'  # data has no getId() method.  Bad.
                 p = '/'.join(parent.getPhysicalPath() + (id,))
                 logger.info('Mounted database %s at %s',
                             self._getMountParams(), p)
@@ -195,7 +195,7 @@ class MountPoint(persistent.Persistent, Implicit):
         # wrapper around the connected object rather than around self.
         try:
             return self._getOrOpenObject(parent)
-        except:
+        except Exception:
             return ImplicitAcquisitionWrapper(self, parent)
 
     def _test(self, parent):
@@ -210,18 +210,18 @@ class MountPoint(persistent.Persistent, Implicit):
         '''
         try:
             app = root['Application']
-        except:
+        except Exception:
             raise MountedStorageError(
                 "No 'Application' object exists in the mountable database.")
         try:
             return app.unrestrictedTraverse(self._path)
-        except:
+        except Exception:
             raise MountedStorageError(
                 "The path '%s' was not found in the mountable database."
                 % self._path)
 
 
-class MountedConnectionCloser:
+class MountedConnectionCloser(object):
     '''Closes the connection used by the mounted database
     while performing other cleanup.
     '''
@@ -253,33 +253,32 @@ class MountedConnectionCloser:
                 del mp.__dict__['_v_data']
                 data = t[0]
                 if not close_db and data.__dict__.get(
-                    '_v__object_deleted__', 0):
+                        '_v__object_deleted__', 0):
                     # This mount point has been deleted.
                     del data.__dict__['_v__object_deleted__']
                     close_db = 1
             # Close the child connection.
             try:
                 del conn._mount_parent_jar
-            except:
+            except Exception:
                 pass
             conn.close()
 
         if close_db:
             # Stop using this database. Close it if no other
             # MountPoint is using it.
-            dblock.acquire()
-            try:
+            with dblock:
                 params = mp._getMountParams()
                 mp._v_db = None
-                if dbs.has_key(params):
+                if params in dbs:
                     dbInfo = dbs[params]
                     db, mounts = dbInfo
-                    try: del mounts[mp._getMountpointId()]
-                    except: pass
+                    try:
+                        del mounts[mp._getMountpointId()]
+                    except Exception:
+                        pass
                     if len(mounts) < 1:
                         # No more mount points are using this database.
                         del dbs[params]
                         db.close()
                         logger.info('Closed database: %s', params)
-            finally:
-                dblock.release()

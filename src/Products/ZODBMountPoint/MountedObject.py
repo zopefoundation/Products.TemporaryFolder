@@ -2,14 +2,14 @@
 #
 # Copyright (c) 2002 Zope Foundation and Contributors.
 # All Rights Reserved.
-# 
+#
 # This software is subject to the provisions of the Zope Public License,
 # Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
 # THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
 # WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE
-# 
+#
 ##############################################################################
 """Mount point (stored in ZODB).
 """
@@ -17,7 +17,7 @@
 import os
 import sys
 import traceback
-from cStringIO import StringIO
+from io import StringIO
 from logging import getLogger
 
 import transaction
@@ -36,11 +36,13 @@ LOG = getLogger('Zope.ZODBMountPoint')
 
 _www = os.path.join(os.path.dirname(__file__), 'www')
 
+
 def getConfiguration():
     from App.config import getConfiguration
     return getConfiguration().dbtab
 
-class SimpleTrailblazer:
+
+class SimpleTrailblazer(object):
     """Follows Zope paths.  If a path is not found, creates a Folder.
 
     Respects Zope security.
@@ -61,10 +63,10 @@ class SimpleTrailblazer:
     def traverseOrConstruct(self, path, omit_final=0):
         """Traverses a path, constructing it if necessary."""
         container = self.base
-        parts = filter(None, path.split('/'))
+        parts = list(filter(None, path.split('/')))
         if omit_final:
             if len(parts) < 1:
-                raise ValueError, 'Path %s is not a valid mount path' % path
+                raise ValueError('Path %s is not a valid mount path' % path)
             parts = parts[:-1]
         for part in parts:
             try:
@@ -77,7 +79,8 @@ class SimpleTrailblazer:
                 container = self._construct(container, part)
         return container
 
-class CustomTrailblazer (SimpleTrailblazer):
+
+class CustomTrailblazer(SimpleTrailblazer):
     """Like SimpleTrailblazer but creates custom objects.
 
     Does not respect Zope security because this may be invoked before
@@ -119,10 +122,10 @@ class MountedObject(SimpleItem):
     _isMountedObject = 1
     # DM 2005-05-17: default value change necessary after fix of
     # '_create_mount_point' handling
-    #_create_mount_points = 0
+    # _create_mount_points = 0
     _create_mount_points = True
 
-    manage_options = ({'label':'Traceback', 'action':'manage_traceback'},)
+    manage_options = ({'label': 'Traceback', 'action': 'manage_traceback'},)
     _v_mount_params = None
     _v_data = None
     _v_connect_error = None
@@ -179,7 +182,7 @@ class MountedObject(SimpleItem):
             obj = root[real_root]
         except KeyError:
             # DM 2005-05-17: why should we require 'container_class'?
-            #if container_class or self._create_mount_points:
+            # if container_class or self._create_mount_points:
             if self._create_mount_points:
                 # Create a database automatically.
                 from OFS.Application import Application
@@ -198,7 +201,7 @@ class MountedObject(SimpleItem):
             except (KeyError, AttributeError):
                 # DM 2005-05-13: obviously, we do not want automatic
                 #  construction when "_create_mount_points" is false
-                #if container_class or self._create_mount_points:
+                # if container_class or self._create_mount_points:
                 if container_class and self._create_mount_points:
                     blazer = CustomTrailblazer(obj, container_class)
                     obj = blazer.traverseOrConstruct(real_path)
@@ -211,20 +214,18 @@ class MountedObject(SimpleItem):
         '''
         exc = sys.exc_info()
         LOG.error('Failed to mount database. %s (%s)' % exc[:2], exc_info=exc)
-        f=StringIO()
+        f = StringIO()
         traceback.print_tb(exc[2], 100, f)
         self._v_connect_error = (exc[0], exc[1], f.getvalue())
         exc = None
-
 
     def __of__(self, parent):
         # Accesses the database, returning an acquisition
         # wrapper around the connected object rather than around self.
         try:
             return self._getOrOpenObject(parent)
-        except:
+        except Exception:
             return ImplicitAcquisitionWrapper(self, parent)
-
 
     def _test(self, parent):
         '''Tests the database connection.
@@ -249,7 +250,7 @@ class MountedObject(SimpleItem):
                 data = aq_base(obj)
                 # Store the data object in a tuple to hide from acquisition.
                 self._v_data = (data,)
-            except:
+            except Exception:
                 # Possibly broken database.
                 self._logConnectException()
                 raise
@@ -258,7 +259,7 @@ class MountedObject(SimpleItem):
                 # XXX This method of finding the mount point is deprecated.
                 # Do not use the _v_mount_point_ attribute.
                 data._v_mount_point_ = (aq_base(self),)
-            except:
+            except Exception:
                 # Might be a read-only object.
                 pass
 
@@ -300,6 +301,7 @@ def setMountPoint(container, id, mp):
 
 
 manage_addMountsForm = PageTemplateFile('addMountsForm.pt', _www)
+
 
 def manage_getMountStatus(dispatcher):
     """Returns the status of each mount point specified by zope.conf
@@ -346,7 +348,7 @@ def manage_getMountStatus(dispatcher):
         res.append({
             'path': path, 'name': name, 'exists': exists,
             'status': status,
-            })
+        })
     return res
 
 
@@ -375,11 +377,11 @@ def manage_addMounts(dispatcher, paths=(), create_mount_points=True,
         container._setObject(faux.id, faux)
         # DM 2005-05-17: we want to keep our decision about automatic
         #  mount point creation
-        #del mo._create_mount_points
+        # del mo._create_mount_points
         container._setOb(faux.id, mo)
         setMountPoint(container, faux.id, mo)
         count += 1
     if REQUEST is not None:
         REQUEST['RESPONSE'].redirect(
             REQUEST['URL1'] + ('/manage_main?manage_tabs_message='
-            'Added %d mount points.' % count))
+                               'Added %d mount points.' % count))

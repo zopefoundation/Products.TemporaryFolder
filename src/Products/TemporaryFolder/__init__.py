@@ -14,19 +14,20 @@
 Temporary Folder initialization routines
 """
 
-import ZODB # for testrunner to be happy
+import ZODB  # NOQA for testrunner to be happy
 
 # we import this so that config files can use the shorter name,
 # it's not used directly
-from TemporaryFolder import SimpleTemporaryContainer as TemporaryContainer
+from .TemporaryFolder import SimpleTemporaryContainer as TemporaryContainer  # NOQA
+
 
 def initialize(context):
-    import TemporaryFolder
+    from . import TemporaryFolder
     context.registerClass(
         TemporaryFolder.MountedTemporaryFolder,
         permission=TemporaryFolder.ADD_TEMPORARY_FOLDER_PERM,
         meta_type='Temporary Folder',
         constructors=(TemporaryFolder.constructTemporaryFolderForm,
                       TemporaryFolder.constructTemporaryFolder),
-        visibility=0 # dont show this in the add list for 2.7+ (use dbtab)
-        )
+        visibility=0  # dont show this in the add list for 2.7+ (use dbtab)
+    )

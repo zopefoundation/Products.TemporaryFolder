@@ -31,7 +31,7 @@ from ZODB.DB import DB
 
 from Products.TemporaryFolder.mount import MountPoint
 
-ADD_TEMPORARY_FOLDER_PERM="Add Temporary Folder"
+ADD_TEMPORARY_FOLDER_PERM = "Add Temporary Folder"
 
 
 def constructTemporaryFolder(self, id, title=None, REQUEST=None):
@@ -41,7 +41,8 @@ def constructTemporaryFolder(self, id, title=None, REQUEST=None):
     if REQUEST is not None:
         return self.manage_main(self, REQUEST, update_menu=1)
 
-constructTemporaryFolderForm=HTMLFile('dtml/addTemporaryFolder', globals())
+
+constructTemporaryFolderForm = HTMLFile('dtml/addTemporaryFolder', globals())
 
 
 class SimpleTemporaryContainer(Folder):
@@ -57,13 +58,15 @@ class MountedTemporaryFolder(MountPoint, Item):
     XXX this is only here for backwards compatibility purposes:
     DBTab uses the SimpleTemporaryContainer class instead.
     """
-    manage_options = ({'label':'Traceback', 'action':'manage_traceback'},)
+    manage_options = (
+        {'label': 'Traceback', 'action': 'manage_traceback'},
+    )
     meta_type = 'Broken Temporary Folder'
 
     def __init__(self, id, title='', params=None):
         self.id = str(id)
         self.title = title
-        MountPoint.__init__(self, path='/') # Eep
+        MountPoint.__init__(self, path='/')  # Eep
 
     manage_traceback = DTMLFile('dtml/mountfail', globals())
 
@@ -86,7 +89,7 @@ class MountedTemporaryFolder(MountPoint, Item):
         # Set up our folder object
         folder.id = self.id
         folder.title = self.title
-        s=folder.manage_options[1:]
+        s = folder.manage_options[1:]
         folder.manage_options = (
-            {'label':'Contents', 'action':'manage_main'},
-            )+s
+            {'label': 'Contents', 'action': 'manage_main'},
+        ) + s
