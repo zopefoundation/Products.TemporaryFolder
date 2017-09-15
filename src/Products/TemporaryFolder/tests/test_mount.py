@@ -1,7 +1,6 @@
 ##############################################################################
 #
-# Copyright (c) 2002 Zope Foundation and Contributors.
-# All Rights Reserved.
+# Copyright (c) 2017 Zope Foundation and Contributors.
 #
 # This software is subject to the provisions of the Zope Public License,
 # Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
@@ -11,16 +10,17 @@
 # FOR A PARTICULAR PURPOSE
 #
 ##############################################################################
-"""ZODBMountPoint product.
-"""
 
 
-def initialize(context):
-    # Configure and load databases if not already done.
-    import MountedObject
-    context.registerClass(
-        MountedObject.MountedObject,
-        constructors=(MountedObject.manage_addMountsForm,
-                      MountedObject.manage_getMountStatus,
-                      MountedObject.manage_addMounts,),
-    )
+import unittest
+
+
+class TestMountPoint(unittest.TestCase):
+
+    def _makeOne(self, *args, **kw):
+        from Products.TemporaryFolder.mount import MountPoint
+        return MountPoint(*args, **kw)
+
+    def test_init(self):
+        mount = self._makeOne('/')
+        self.assertEqual(mount._path, '/')

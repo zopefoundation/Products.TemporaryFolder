@@ -1,9 +1,12 @@
 Changelog
 =========
 
-4.0 (unreleased)
+5.0 (unreleased)
 ----------------
 
+- Remove dysfunctional LowConflictConnection.
+
+- Add support for Python 3.4, 3.5 and 3.6.
 
 4.0 (2016-08-02)
 ----------------
