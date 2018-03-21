@@ -17,7 +17,7 @@
 
 def initialize(context):
     # Configure and load databases if not already done.
-    import MountedObject
+    from . import MountedObject
     context.registerClass(
         MountedObject.MountedObject,
         constructors=(MountedObject.manage_addMountsForm,
