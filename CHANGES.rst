@@ -13,6 +13,8 @@ Changelog
 
 - Add in code of `Products.TemporaryFolder` and `Products.ZODBMountPoint`.
 
+- Require `Zope >= 4`.
+
 3.0 (2016-08-02)
 ----------------
 

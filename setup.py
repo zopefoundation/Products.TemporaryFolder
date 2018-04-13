@@ -17,9 +17,9 @@ from setuptools import setup, find_packages
 setup(
     name='Products.TemporaryFolder',
     version='5.0.dev0',
-    url='https://pypi.python.org/pypi/Products.TemporaryFolder',
+    url='https://github.com/zopefoundation/Products.TemporaryFolder',
     license='ZPL 2.1',
-    description="Zope 2 temporary folder support.",
+    description="Zope temporary folder support.",
     author='Zope Foundation and Contributors',
     author_email='zope-dev@zope.org',
     long_description=(open('README.rst').read() + '\n' +
@@ -30,7 +30,7 @@ setup(
     classifiers=[
         "Development Status :: 6 - Mature",
         "Environment :: Web Environment",
-        "Framework :: Zope2",
+        "Framework :: Zope :: 4",
         "License :: OSI Approved :: Zope Public License",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
@@ -48,7 +48,7 @@ setup(
         'Acquisition',
         'tempstorage',
         'ZODB',
-        'Zope2 >= 4.0.dev0',
+        'Zope >= 4.0b1',
     ],
     include_package_data=True,
     zip_safe=False,

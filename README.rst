@@ -1,4 +1,4 @@
 Overview
 ========
 
-Zope 2 temporary storage / folder support.
+Zope temporary storage / folder support.
