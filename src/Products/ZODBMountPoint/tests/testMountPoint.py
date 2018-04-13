@@ -153,18 +153,18 @@ class MountingTests(unittest.TestCase):
         self.assertEqual(app.a3, '3')
 
     def testGetMountPoint(self):
-        self.assert_(getMountPoint(self.app) is None)
-        self.assert_(getMountPoint(self.app.mount1) is not None)
+        self.assertIsNone(getMountPoint(self.app))
+        self.assertIsNotNone(getMountPoint(self.app.mount1))
         self.assertEqual(getMountPoint(self.app.mount1)._path, '/mount1')
-        self.assert_(getMountPoint(self.app.mount2) is not None)
+        self.assertIsNotNone(getMountPoint(self.app.mount2))
         self.assertEqual(getMountPoint(self.app.mount2)._path, '/mount2')
         self.assertEqual(getMountPoint(self.app.i.mount3)._path, '/i/mount3')
         del self.app.mount2
         self.app.mount2 = Folder()
         self.app.mount2.id = 'mount2'
-        self.assert_(getMountPoint(self.app.mount2) is None)
+        self.assertIsNone(getMountPoint(self.app.mount2))
         transaction.commit()
-        self.assert_(getMountPoint(self.app.mount2) is None)
+        self.assertIsNone(getMountPoint(self.app.mount2))
 
     def test_manage_getMountStatus(self):
         status = manage_getMountStatus(self.app)
