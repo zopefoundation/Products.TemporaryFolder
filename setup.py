@@ -52,4 +52,9 @@ setup(
     ],
     include_package_data=True,
     zip_safe=False,
+    entry_points="""
+    [zope2.initialize]
+    Products.TemporaryFolder = Products.TemporaryFolder:initialize
+    Products.ZODBMountPoint = Products.ZODBMountPoint:initialize
+    """,
 )
