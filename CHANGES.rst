@@ -4,7 +4,9 @@ Changelog
 5.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Bring back Application initialization (creation of BrowserIdManager and
+  SessionDataManager in the ZODB on first startup).
+  This release requires Zope >= 4.0b5.
 
 
 5.0 (2018-04-13)
