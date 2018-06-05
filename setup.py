@@ -48,7 +48,7 @@ setup(
         'Acquisition',
         'tempstorage',
         'ZODB',
-        'Zope >= 4.0b1',
+        'Zope >= 4.0b5',
     ],
     include_package_data=True,
     zip_safe=False,
