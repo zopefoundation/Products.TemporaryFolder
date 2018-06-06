@@ -41,6 +41,7 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: Implementation :: CPython",
     ],
+    keywords="Zope ZODB mount temporary storage folder",
     install_requires=[
         'setuptools',
         'AccessControl',
