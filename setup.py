@@ -50,6 +50,11 @@ setup(
         'ZODB',
         'Zope >= 4.0b5',
     ],
+    extras_require=dict(
+        test=[
+            'Products.Sessions >= 4.1',
+        ],
+    ),
     include_package_data=True,
     zip_safe=False,
     entry_points="""
