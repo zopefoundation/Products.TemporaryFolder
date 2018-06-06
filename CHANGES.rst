@@ -8,6 +8,8 @@ Changelog
   SessionDataManager in the ZODB on first startup).
   This release requires Zope >= 4.0b5.
 
+- Drop support for Python 3.4.
+
 
 5.0 (2018-04-13)
 ----------------
