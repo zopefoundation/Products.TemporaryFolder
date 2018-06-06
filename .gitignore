@@ -4,6 +4,7 @@
 .coverage
 .coverage.*
 .installed.cfg
+.mr.developer.cfg
 .tox/
 bin/
 build/
