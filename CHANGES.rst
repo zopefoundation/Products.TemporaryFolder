@@ -1,7 +1,7 @@
 Changelog
 =========
 
-5.1 (unreleased)
+5.1 (2018-06-06)
 ----------------
 
 - Bring back Application initialization (creation of BrowserIdManager and
