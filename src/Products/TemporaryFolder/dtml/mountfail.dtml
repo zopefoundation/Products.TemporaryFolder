@@ -1,7 +1,9 @@
 <dtml-var manage_page_header>
+
 <dtml-var manage_tabs>
 
 <main class="container-fluid">
+
 	<h2>Mount Failure Traceback</h2>
 
 	<dtml-let exc=mount_error_>
@@ -16,5 +18,7 @@
 			Database not mounted.
 		</dtml-if>
 	</dtml-let>
+
+</main>
 
 <dtml-var manage_page_footer>

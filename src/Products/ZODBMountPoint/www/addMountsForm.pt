@@ -2,7 +2,7 @@
 
 <main class="container-fluid">
 	<h2 tal:define="form_title string:Add ZODB Mount Points"
-	    tal:replace="structure here/manage_form_title">Form Title</h2>
+		tal:replace="structure here/manage_form_title">Form Title</h2>
 
 	<p class="form-help">
 		Use this form to finalize the mount points configured in zope.conf.
