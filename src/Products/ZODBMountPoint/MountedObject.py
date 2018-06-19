@@ -119,6 +119,8 @@ class MountedObject(SimpleItem):
     reason the database did not connect.
     '''
     meta_type = 'ZODB Mount Point'
+    zmi_icon = 'fas fa-database'
+    
     _isMountedObject = 1
     # DM 2005-05-17: default value change necessary after fix of
     # '_create_mount_point' handling
