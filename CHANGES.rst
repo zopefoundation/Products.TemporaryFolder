@@ -4,7 +4,8 @@ Changelog
 5.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Update forms to Bootstrap ZMI.
+  (`#6 <https://github.com/zopefoundation/Products.TemporaryFolder/pull/6>`_)
 
 
 5.1 (2018-06-06)
