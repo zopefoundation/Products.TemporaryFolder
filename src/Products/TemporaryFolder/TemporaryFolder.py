@@ -48,6 +48,7 @@ constructTemporaryFolderForm = HTMLFile('dtml/addTemporaryFolder', globals())
 class SimpleTemporaryContainer(Folder):
     # dbtab-style container class
     meta_type = 'Temporary Folder'
+    zmi_icon = 'far fa-hdd'
 
 
 class MountedTemporaryFolder(MountPoint, Item):
@@ -62,6 +63,7 @@ class MountedTemporaryFolder(MountPoint, Item):
         {'label': 'Traceback', 'action': 'manage_traceback'},
     )
     meta_type = 'Broken Temporary Folder'
+    zmi_icon = 'far fa-hdd text-danger'
 
     def __init__(self, id, title='', params=None):
         self.id = str(id)
