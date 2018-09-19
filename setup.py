@@ -46,6 +46,7 @@ setup(
         'setuptools',
         'AccessControl',
         'Acquisition',
+        'six',
         'tempstorage',
         'ZODB',
         'Zope >= 4.0b5',

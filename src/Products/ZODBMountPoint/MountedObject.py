@@ -17,7 +17,7 @@
 import os
 import sys
 import traceback
-from io import StringIO
+from six import StringIO
 from logging import getLogger
 
 import transaction
@@ -120,7 +120,7 @@ class MountedObject(SimpleItem):
     '''
     meta_type = 'ZODB Mount Point'
     zmi_icon = 'fas fa-database'
-    
+
     _isMountedObject = 1
     # DM 2005-05-17: default value change necessary after fix of
     # '_create_mount_point' handling
