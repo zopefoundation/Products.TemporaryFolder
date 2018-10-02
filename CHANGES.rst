@@ -7,8 +7,12 @@ Changelog
 - Update forms to Bootstrap ZMI.
   (`#6 <https://github.com/zopefoundation/Products.TemporaryFolder/pull/6>`_)
 
-- Fix logging traceback in python 2
+- Fix logging traceback in Python 2.
   [pbauer]
+  
+- Fix creating a temp_folder in Python 2.
+  (`#7 <https://github.com/zopefoundation/Products.TemporaryFolder/pull/7>`_)
+
 
 5.1 (2018-06-06)
 ----------------
