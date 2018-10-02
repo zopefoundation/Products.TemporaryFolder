@@ -15,6 +15,7 @@
 """
 
 import os
+import six
 import sys
 import traceback
 from six import StringIO
@@ -197,6 +198,8 @@ class MountedObject(SimpleItem):
 
         if real_path is None:
             real_path = self._path
+        if six.PY2 and isinstance(real_path, six.text_type):
+            real_path = real_path.encode('utf8')
         if real_path and real_path != '/':
             try:
                 obj = obj.unrestrictedTraverse(real_path)
