@@ -49,7 +49,7 @@ def install_tempfolder_and_sdc(app):
         mount_paths = [ x[0] for x in dbtab_config.listMountPaths() ]
         if not '/temp_folder' in mount_paths:
             # we won't be able to create the mount point properly
-            LOG.error('Could not initialze a Temporary Folder because '
+            LOG.error('Could not initialize a Temporary Folder because '
                       'a database was not configured to be mounted at '
                       'the /temp_folder mount point')
             return
