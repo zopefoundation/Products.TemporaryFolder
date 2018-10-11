@@ -4,12 +4,14 @@ Changelog
 5.2 (unreleased)
 ----------------
 
+- Add support for Python 3.7.
+
 - Update forms to Bootstrap ZMI.
   (`#6 <https://github.com/zopefoundation/Products.TemporaryFolder/pull/6>`_)
 
 - Fix logging traceback in Python 2.
   [pbauer]
-  
+
 - Fix creating a temp_folder in Python 2.
   (`#7 <https://github.com/zopefoundation/Products.TemporaryFolder/pull/7>`_)
 
