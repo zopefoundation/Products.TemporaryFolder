@@ -3,7 +3,7 @@ include *.rst
 include .coveragerc
 include tox.ini
 
-recursive-include src *
+exclude MANIFEST.in
 
-global-exclude *.pyc
-global-exclude *.pyo
+recursive-include src *.dtml
+recursive-include src *.pt
