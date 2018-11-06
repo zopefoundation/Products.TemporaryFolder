@@ -16,7 +16,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='Products.TemporaryFolder',
-    version='5.2',
+    version='5.3.dev0',
     url='https://github.com/zopefoundation/Products.TemporaryFolder',
     license='ZPL 2.1',
     description="Zope temporary folder support.",
