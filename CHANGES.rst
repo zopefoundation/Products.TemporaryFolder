@@ -1,7 +1,7 @@
 Changelog
 =========
 
-5.3 (unreleased)
+5.3 (2019-04-15)
 ----------------
 
 - improve the README
