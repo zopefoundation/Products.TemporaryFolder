@@ -18,6 +18,12 @@ setup(
     name='Products.TemporaryFolder',
     version='5.3.dev0',
     url='https://github.com/zopefoundation/Products.TemporaryFolder',
+    project_urls={
+        'Issue Tracker': ('https://github.com/zopefoundation/'
+                          'Products.TemporaryFolder/issues'),
+        'Sources': ('https://github.com/zopefoundation/'
+                    'Products.TemporaryFolder'),
+    },
     license='ZPL 2.1',
     description="Zope temporary folder support.",
     author='Zope Foundation and Contributors',

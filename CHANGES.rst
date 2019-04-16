@@ -4,6 +4,8 @@ Changelog
 5.3 (unreleased)
 ----------------
 
+- improve the README
+
 - Specify supported Python versions using ``python_requires`` in setup.py
   (`Zope#481 <https://github.com/zopefoundation/Zope/issues/481>`_)
 
