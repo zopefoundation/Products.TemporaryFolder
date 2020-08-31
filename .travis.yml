@@ -24,7 +24,7 @@ script:
     - tox
 
 after_success:
-    - coveerage combine
+    - coverage combine
     - coveralls
 
 notifications:
