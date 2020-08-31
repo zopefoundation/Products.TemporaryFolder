@@ -29,9 +29,10 @@ from OFS.SimpleItem import Item
 from tempstorage.TemporaryStorage import TemporaryStorage
 from ZODB.DB import DB
 
-from Products.TemporaryFolder.mount import MountPoint
+from .mount import MountPoint
 
-ADD_TEMPORARY_FOLDER_PERM = "Add Temporary Folder"
+
+ADD_TEMPORARY_FOLDER_PERM = 'Add Temporary Folder'
 
 
 def constructTemporaryFolder(self, id, title=None, REQUEST=None):
@@ -56,7 +57,7 @@ class MountedTemporaryFolder(MountPoint, Item):
     A mounted RAM database with a basic interface for displaying the
     reason the database did not connect.
 
-    XXX this is only here for backwards compatibility purposes:
+    BBB this is only here for backwards compatibility purposes:
     DBTab uses the SimpleTemporaryContainer class instead.
     """
     manage_options = (

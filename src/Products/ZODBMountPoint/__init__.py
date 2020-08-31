@@ -13,8 +13,9 @@
 ##############################################################################
 """ZODBMountPoint product.
 """
-from logging import getLogger
 import sys
+from logging import getLogger
+
 
 LOG = getLogger('Products.TemporaryFolder')
 
@@ -24,11 +25,14 @@ def commit(note):
     transaction.get().note(note)
     transaction.commit()
 
+
 def install_tempfolder_and_sdc(app):
-    from App.config import getConfiguration
     from Acquisition import aq_base
-    from .MountedObject import manage_addMounts, MountedObject
+    from App.config import getConfiguration
+
+    from .MountedObject import MountedObject
     from .MountedObject import getConfiguration as getDBTabConfiguration
+    from .MountedObject import manage_addMounts
 
     dbtab_config = getDBTabConfiguration()
 
@@ -46,8 +50,8 @@ def install_tempfolder_and_sdc(app):
         if dbtab_config is None:
             # DefaultConfiguration, do nothing
             return
-        mount_paths = [ x[0] for x in dbtab_config.listMountPaths() ]
-        if not '/temp_folder' in mount_paths:
+        mount_paths = [x[0] for x in dbtab_config.listMountPaths()]
+        if '/temp_folder' not in mount_paths:
             # we won't be able to create the mount point properly
             LOG.error('Could not initialize a Temporary Folder because '
                       'a database was not configured to be mounted at '
@@ -57,7 +61,7 @@ def install_tempfolder_and_sdc(app):
             manage_addMounts(app, ('/temp_folder',))
             commit(u'Added temp_folder')
             tf = app.temp_folder
-        except:
+        except Exception:
             LOG.error('Could not add a /temp_folder mount point due to an '
                       'error.', exc_info=sys.exc_info())
             return
@@ -88,27 +92,27 @@ def install_tempfolder_and_sdc(app):
         if addnotify and app.unrestrictedTraverse(addnotify, None) is None:
             LOG.warn('failed to use nonexistent "%s" script as '
                      'session-add-notify-script-path' % addnotify)
-            addnotify=None
+            addnotify = None
 
         if delnotify and app.unrestrictedTraverse(delnotify, None) is None:
             LOG.warn('failed to use nonexistent "%s" script as '
                      'session-delete-notify-script-path' % delnotify)
-            delnotify=None
+            delnotify = None
 
         toc = TransientObjectContainer('session_data',
                                        'Session Data Container',
-                                       timeout_mins = timeout_spec,
-                                       addNotification = addnotify,
-                                       delNotification = delnotify,
+                                       timeout_mins=timeout_spec,
+                                       addNotification=addnotify,
+                                       delNotification=delnotify,
                                        limit=limit,
-                                       period_secs = period_spec)
+                                       period_secs=period_spec)
 
         tf._setObject('session_data', toc)
         tf_reserved = getattr(tf, '_reserved_names', ())
         if 'session_data' not in tf_reserved:
             tf._reserved_names = tf_reserved + ('session_data',)
         commit(u'Added session_data to temp_folder')
-    return tf # return the tempfolder object for test purposes
+    return tf  # return the tempfolder object for test purposes
 
 
 def initialize(context):
@@ -118,8 +122,8 @@ def initialize(context):
         MountedObject.MountedObject,
         constructors=(MountedObject.manage_addMountsForm,
                       MountedObject.manage_getMountStatus,
-                      MountedObject.manage_addMounts,),
+                      MountedObject.manage_addMounts),
     )
-    app = context.getApplication() # new API added after Zope 4.0b4
+    app = context.getApplication()  # new API added after Zope 4.0b4
     if app is not None:
         install_tempfolder_and_sdc(app)

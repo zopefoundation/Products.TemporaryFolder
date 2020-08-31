@@ -18,9 +18,12 @@ import tempfile
 import unittest
 
 import Products
-from App.config import getConfiguration, setConfiguration
-from OFS.Application import Application, AppInitializer
+from App.config import getConfiguration
+from App.config import setConfiguration
+from OFS.Application import AppInitializer
+from OFS.Application import Application
 from Zope2.Startup.options import ZopeWSGIOptions
+
 
 test_cfg = """
 instancehome {instance_home}
@@ -41,6 +44,7 @@ instancehome {instance_home}
     container-class Products.TemporaryFolder.TemporaryContainer
 </zodb_db>
 """
+
 
 def getApp():
     from App.ZApplication import ZApplicationWrapper
@@ -80,7 +84,8 @@ class TestInitialization(unittest.TestCase):
         return AppInitializer(app)
 
     def test_install_tempfolder_and_transient_object_container(self):
-        from Products.TemporaryFolder.TemporaryFolder import SimpleTemporaryContainer
+        from Products.TemporaryFolder.TemporaryFolder import \
+            SimpleTemporaryContainer
         from Products.Transience.Transience import TransientObjectContainer
         self.configure(test_cfg)
         initializer = self.getInitializer()
@@ -88,6 +93,7 @@ class TestInitialization(unittest.TestCase):
         app = initializer.getApp()
         self.assertIsInstance(app.temp_folder, SimpleTemporaryContainer)
         self.assertEqual(app.temp_folder.meta_type, 'Temporary Folder')
-        self.assertIsInstance(app.temp_folder.session_data, TransientObjectContainer)
+        self.assertIsInstance(app.temp_folder.session_data,
+                              TransientObjectContainer)
         self.assertEqual(app.temp_folder.session_data.meta_type,
                          'Transient Object Container')

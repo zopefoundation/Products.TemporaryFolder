@@ -21,14 +21,15 @@ import sys
 import unittest
 
 import App.config
+import transaction
 from OFS.Application import Application
 from OFS.Folder import Folder
-import transaction
 from Zope2.Startup.datatypes import DBTab
 
-from Products.ZODBMountPoint.MountedObject import manage_addMounts
-from Products.ZODBMountPoint.MountedObject import getMountPoint
-from Products.ZODBMountPoint.MountedObject import manage_getMountStatus
+from ..MountedObject import getMountPoint
+from ..MountedObject import manage_addMounts
+from ..MountedObject import manage_getMountStatus
+
 
 try:
     __file__
@@ -111,8 +112,8 @@ class MountingTests(unittest.TestCase):
         root['Application'] = app = Application()
         self.app = app
         # login
-        from AccessControl.User import system
         from AccessControl.SecurityManagement import newSecurityManager
+        from AccessControl.User import system
         newSecurityManager(None, system)
         transaction.commit()  # Get app._p_jar set
         manage_addMounts(app, ('/mount1', '/mount2', '/i/mount3'))

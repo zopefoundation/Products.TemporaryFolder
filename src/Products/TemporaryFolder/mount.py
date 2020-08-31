@@ -14,15 +14,16 @@
 """Mounted database support
 """
 
-import time
-import threading
 import logging
-import persistent
+import threading
+import time
 
+import persistent
 from Acquisition import Implicit
 from Acquisition import ImplicitAcquisitionWrapper
 from Acquisition import aq_base
 from ZODB.POSException import StorageError
+
 
 logger = logging.getLogger('ZODB.Mount')
 
@@ -53,9 +54,9 @@ def parentClassFactory(jar, module, name):
 
 
 class MountPoint(persistent.Persistent, Implicit):
-    '''The base class for a Zope object which, when traversed,
+    """The base class for a Zope object which, when traversed,
     accesses a different database.
-    '''
+    """
 
     # Default values for non-persistent variables.
     _v_db = None
@@ -63,7 +64,7 @@ class MountPoint(persistent.Persistent, Implicit):
     _v_connect_error = None
 
     def __init__(self, path, params=None, classDefsFromRoot=None):
-        '''
+        """
         @arg path The path within the mounted database from which
         to derive the root.
 
@@ -74,7 +75,7 @@ class MountPoint(persistent.Persistent, Implicit):
         and use the existing database.  Include the class name of
         the storage.  For example,
         ZEO params might be "ZODB.ZEOClient localhost 1081".
-        '''
+        """
         # The only reason we need a __mountpoint_id is to
         # be sure we don't close a database prematurely when
         # it is mounted more than once and one of the points
@@ -88,14 +89,14 @@ class MountPoint(persistent.Persistent, Implicit):
         self._path = path
 
     def _createDB(self):
-        '''Gets the database object, usually by creating a Storage object
+        """Gets the database object, usually by creating a Storage object
         and returning ZODB.DB(storage).
-        '''
+        """
         raise NotImplementedError
 
     def _getDB(self):
-        '''Creates or opens a DB object.
-        '''
+        """Creates or opens a DB object.
+        """
         newMount = 0
         with dblock:
             params = self._params
@@ -121,7 +122,7 @@ class MountPoint(persistent.Persistent, Implicit):
         return self._params
 
     def __repr__(self):
-        return "%s(%s, %s)" % (self.__class__.__name__, repr(self._path),
+        return '%s(%s, %s)' % (self.__class__.__name__, repr(self._path),
                                self._params)
 
     def _openMountableConnection(self, parent):
@@ -199,15 +200,15 @@ class MountPoint(persistent.Persistent, Implicit):
             return ImplicitAcquisitionWrapper(self, parent)
 
     def _test(self, parent):
-        '''Tests the database connection.
-        '''
+        """Tests the database connection.
+        """
         self._getOrOpenObject(parent)
         return 1
 
     def _getMountRoot(self, root):
-        '''Gets the object to be mounted.
+        """Gets the object to be mounted.
         Can be overridden to provide different behavior.
-        '''
+        """
         try:
             app = root['Application']
         except Exception:
@@ -222,9 +223,9 @@ class MountPoint(persistent.Persistent, Implicit):
 
 
 class MountedConnectionCloser(object):
-    '''Closes the connection used by the mounted database
+    """Closes the connection used by the mounted database
     while performing other cleanup.
-    '''
+    """
     close_db = 0
 
     def __init__(self, mountpoint, conn):

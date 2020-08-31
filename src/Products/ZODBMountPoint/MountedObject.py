@@ -15,23 +15,24 @@
 """
 
 import os
-import six
 import sys
 import traceback
-from six import StringIO
 from logging import getLogger
 
-import transaction
+import six
+from six import StringIO
 
+import transaction
 from AccessControl.class_init import InitializeClass
 from Acquisition import ImplicitAcquisitionWrapper
 from Acquisition import aq_base
 from Acquisition import aq_inner
 from Acquisition import aq_parent
-from OFS.SimpleItem import SimpleItem
 from OFS.Folder import Folder
 from OFS.Folder import manage_addFolder
+from OFS.SimpleItem import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+
 
 LOG = getLogger('Zope.ZODBMountPoint')
 
@@ -96,7 +97,7 @@ class CustomTrailblazer(SimpleTrailblazer):
             container_class = 'OFS.Folder.Folder'
         pos = container_class.rfind('.')
         if pos < 0:
-            raise ValueError("Not a valid container_class: %s" % repr(
+            raise ValueError('Not a valid container_class: %s' % repr(
                 container_class))
         self.module_name = container_class[:pos]
         self.class_name = container_class[pos + 1:]
@@ -116,9 +117,9 @@ class CustomTrailblazer(SimpleTrailblazer):
 
 
 class MountedObject(SimpleItem):
-    '''A database mount point with a basic interface for displaying the
+    """A database mount point with a basic interface for displaying the
     reason the database did not connect.
-    '''
+    """
     meta_type = 'ZODB Mount Point'
     zmi_icon = 'fas fa-database'
 
@@ -215,8 +216,8 @@ class MountedObject(SimpleItem):
         return obj
 
     def _logConnectException(self):
-        '''Records info about the exception that just occurred.
-        '''
+        """Records info about the exception that just occurred.
+        """
         exc = sys.exc_info()
         LOG.error('Failed to mount database. %s (%s)' % exc[:2], exc_info=exc)
         f = StringIO()
@@ -233,8 +234,8 @@ class MountedObject(SimpleItem):
             return ImplicitAcquisitionWrapper(self, parent)
 
     def _test(self, parent):
-        '''Tests the database connection.
-        '''
+        """Tests the database connection.
+        """
         self._getOrOpenObject(parent)
         return 1
 
@@ -261,7 +262,7 @@ class MountedObject(SimpleItem):
                 raise
 
             try:
-                # XXX This method of finding the mount point is deprecated.
+                # BBB This method of finding the mount point is deprecated.
                 # Do not use the _v_mount_point_ attribute.
                 data._v_mount_point_ = (aq_base(self),)
             except Exception:
@@ -271,7 +272,7 @@ class MountedObject(SimpleItem):
         return data.__of__(parent)
 
     def __repr__(self):
-        return "%s(id=%s)" % (self.__class__.__name__, repr(self.id))
+        return '%s(id=%s)' % (self.__class__.__name__, repr(self.id))
 
 
 InitializeClass(MountedObject)
