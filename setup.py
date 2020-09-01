@@ -59,6 +59,7 @@ setup(
         'Acquisition',
         'six',
         'tempstorage',
+        'Products.ZODBMountPoint',
         'ZODB',
         'Zope >= 4.0b5',
     ],
