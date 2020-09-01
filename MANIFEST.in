@@ -5,4 +5,3 @@ include tox.ini
 exclude MANIFEST.in
 
 recursive-include src *.dtml
-recursive-include src *.pt

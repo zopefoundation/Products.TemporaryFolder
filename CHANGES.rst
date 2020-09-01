@@ -1,8 +1,14 @@
 Changelog
 =========
 
-5.4 (unreleased)
+6.0 (unreleased)
 ----------------
+
+- split ``Products.ZODBMountPoint`` into separate package
+  and removed all code that automatically instatiates a temporary
+  folder and sessioning artifacts on Zope startup.
+  (`#12
+  <https://github.com/zopefoundation/Products.TemporaryFolder/issues/12>`_)
 
 
 5.3 (2019-04-15)

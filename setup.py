@@ -18,7 +18,7 @@ from setuptools import setup
 
 setup(
     name='Products.TemporaryFolder',
-    version='5.4.dev0',
+    version='6.0.dev0',
     url='https://github.com/zopefoundation/Products.TemporaryFolder',
     project_urls={
         'Issue Tracker': ('https://github.com/zopefoundation/'
@@ -51,7 +51,7 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: Implementation :: CPython',
     ],
-    keywords='Zope ZODB mount temporary storage folder',
+    keywords='Zope ZODB temporary storage folder',
     python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*',
     install_requires=[
         'setuptools',
@@ -62,16 +62,10 @@ setup(
         'ZODB',
         'Zope >= 4.0b5',
     ],
-    extras_require=dict(
-        test=[
-            'Products.Sessions >= 4.1',
-        ],
-    ),
     include_package_data=True,
     zip_safe=False,
     entry_points="""
     [zope2.initialize]
     Products.TemporaryFolder = Products.TemporaryFolder:initialize
-    Products.ZODBMountPoint = Products.ZODBMountPoint:initialize
     """,
 )
