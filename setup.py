@@ -18,7 +18,7 @@ from setuptools import setup
 
 setup(
     name='Products.TemporaryFolder',
-    version='6.0.dev0',
+    version='6.0',
     url='https://github.com/zopefoundation/Products.TemporaryFolder',
     project_urls={
         'Issue Tracker': ('https://github.com/zopefoundation/'
@@ -36,7 +36,7 @@ setup(
     namespace_packages=['Products'],
     package_dir={'': 'src'},
     classifiers=[
-        'Development Status :: 6 - Mature',
+        'Development Status :: 7 - Inactive',
         'Environment :: Web Environment',
         'Framework :: Zope :: 4',
         'License :: OSI Approved :: Zope Public License',

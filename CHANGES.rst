@@ -1,7 +1,7 @@
 Changelog
 =========
 
-6.0 (unreleased)
+6.0 (2020-09-01)
 ----------------
 
 - split ``Products.ZODBMountPoint`` into separate package
