@@ -17,8 +17,6 @@ Overview
 
 Zope temporary storage / folder support.
 
-This package contains ``Products.TemporaryFolder`` and
-``Products.ZODBMountPoint``.
 
 Please note
 -----------
