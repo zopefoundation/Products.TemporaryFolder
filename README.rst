@@ -41,3 +41,9 @@ option to create the container in the ZODB::
       mount-point /temp_folder
       container-class Products.TemporaryFolder.TemporaryContainer
   </zodb_db>
+
+When upgrading from version 5.3 to 6.0 you need to manually delete the
+``/temp_folder`` object in the ZMI before restarting your Zope instance with
+version 6.0. If you see tracebacks ``ZConfig.ConfigurationError: No database
+configured for mount point at /temp_folder`` after the upgrade, please revert
+to version 5.3 and delete ``/temp_folder`` before upgrading to 6.0 again.
