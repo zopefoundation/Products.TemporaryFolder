@@ -1,5 +1,5 @@
-.. image:: https://travis-ci.com/zopefoundation/Products.TemporaryFolder.svg?branch=master
-   :target: https://travis-ci.com/zopefoundation/Products.TemporaryFolder
+.. image:: https://github.com/zopefoundation/Products.TemporaryFolder/actions/workflows/tests.yml/badge.svg
+        :target: https://github.com/zopefoundation/Products.TemporaryFolder/actions/workflows/tests.yml
 
 .. image:: https://coveralls.io/repos/github/zopefoundation/Products.TemporaryFolder/badge.svg?branch=master
    :target: https://coveralls.io/github/zopefoundation/Products.TemporaryFolder?branch=master
