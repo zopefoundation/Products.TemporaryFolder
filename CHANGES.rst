@@ -4,6 +4,8 @@ Changelog
 6.1 (unreleased)
 ----------------
 
+- add support for Python 3.9
+
 
 6.0 (2020-09-01)
 ----------------
