@@ -1,7 +1,7 @@
 Changelog
 =========
 
-6.1 (unreleased)
+6.1 (2021-03-16)
 ----------------
 
 - add support for Python 3.9
