@@ -1,7 +1,7 @@
 Changelog
 =========
 
-6.2 (unreleased)
+6.2 (2021-07-06)
 ----------------
 
 - "Undeprecate" sessioning configurations using this package
