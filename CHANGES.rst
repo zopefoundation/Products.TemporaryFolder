@@ -4,6 +4,8 @@ Changelog
 6.2 (unreleased)
 ----------------
 
+- update package configuration
+
 
 6.1 (2021-03-16)
 ----------------
