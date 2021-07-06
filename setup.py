@@ -36,7 +36,7 @@ setup(
     namespace_packages=['Products'],
     package_dir={'': 'src'},
     classifiers=[
-        'Development Status :: 7 - Inactive',
+        'Development Status :: 6 - Mature',
         'Environment :: Web Environment',
         'Framework :: Zope',
         'Framework :: Zope :: 4',
@@ -61,7 +61,7 @@ setup(
         'AccessControl',
         'Acquisition',
         'six',
-        'tempstorage',
+        'tempstorage >= 5.2',
         'Products.ZODBMountPoint',
         'ZODB',
         'Zope >= 4.0b5',

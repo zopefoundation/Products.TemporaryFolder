@@ -4,6 +4,11 @@ Changelog
 6.2 (unreleased)
 ----------------
 
+- "Undeprecate" sessioning configurations using this package
+  because ``tempstorage`` version 5.2 fixed the data loss issue.
+  (`#16
+  <https://github.com/zopefoundation/Products.TemporaryFolder/issues/16>`_)
+
 - update package configuration
 
 
