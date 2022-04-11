@@ -4,6 +4,8 @@ Changelog
 6.3 (unreleased)
 ----------------
 
+- Add support for Python 3.10.
+
 
 6.2 (2021-07-06)
 ----------------
@@ -13,13 +15,13 @@ Changelog
   (`#16
   <https://github.com/zopefoundation/Products.TemporaryFolder/issues/16>`_)
 
-- update package configuration
+- Update package configuration.
 
 
 6.1 (2021-03-16)
 ----------------
 
-- add support for Python 3.9
+- Add support for Python 3.9.
 
 
 6.0 (2020-09-01)
@@ -88,4 +90,3 @@ Changelog
 - Create a separate distribution called `Products.TemporaryFolder` without
   any code inside it. This allows projects to depend on this project
   inside the Zope 2.13 release line.
-
