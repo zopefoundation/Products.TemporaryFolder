@@ -80,7 +80,7 @@ class MountPoint(persistent.Persistent, Implicit):
         # be sure we don't close a database prematurely when
         # it is mounted more than once and one of the points
         # is unmounted.
-        self.__mountpoint_id = '%s_%f' % (id(self), time.time())
+        self.__mountpoint_id = f'{id(self)}_{time.time():f}'
         if params is None:
             # We still need something to use as a hash in
             # the "dbs" dictionary.
@@ -122,8 +122,7 @@ class MountPoint(persistent.Persistent, Implicit):
         return self._params
 
     def __repr__(self):
-        return '%s(%s, %s)' % (self.__class__.__name__, repr(self._path),
-                               self._params)
+        return f'{self.__class__.__name__}({self._path!r}, {self._params})'
 
     def _openMountableConnection(self, parent):
         # Opens a new connection to the database.
@@ -222,7 +221,7 @@ class MountPoint(persistent.Persistent, Implicit):
                 % self._path)
 
 
-class MountedConnectionCloser(object):
+class MountedConnectionCloser:
     """Closes the connection used by the mounted database
     while performing other cleanup.
     """
