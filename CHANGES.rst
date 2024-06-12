@@ -1,9 +1,13 @@
 Changelog
 =========
 
-7.1 (unreleased)
+8.0 (unreleased)
 ----------------
 
+
+- Add support for Python 3.12.
+
+- Drop support for Python 3.7.
 
 7.0 (2023-02-01)
 ----------------
