@@ -17,7 +17,7 @@ from setuptools import setup
 
 setup(
     name='Products.TemporaryFolder',
-    version='8.1.dev0',
+    version='8.1',
     url='https://github.com/zopefoundation/Products.TemporaryFolder',
     project_urls={
         'Issue Tracker': ('https://github.com/zopefoundation/'
@@ -57,6 +57,7 @@ setup(
         'ZODB',
         'Zope >= 4.0b5',
     ],
+    include_package_data=True,
     entry_points="""
     [zope2.initialize]
     Products.TemporaryFolder = Products.TemporaryFolder:initialize

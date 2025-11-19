@@ -1,8 +1,10 @@
 Changelog
 =========
 
-8.1 (unreleased)
+8.1 (2025-11-19)
 ----------------
+
+- Fix release to include package data files.
 
 
 8.0 (2025-11-19)
