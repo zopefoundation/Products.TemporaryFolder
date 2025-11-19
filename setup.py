@@ -17,7 +17,7 @@ from setuptools import setup
 
 setup(
     name='Products.TemporaryFolder',
-    version='8.0.dev0',
+    version='8.0',
     url='https://github.com/zopefoundation/Products.TemporaryFolder',
     project_urls={
         'Issue Tracker': ('https://github.com/zopefoundation/'
