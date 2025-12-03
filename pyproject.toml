@@ -42,7 +42,7 @@ dependencies = [
     "tempstorage >= 5.2",
     "Products.ZODBMountPoint",
     "ZODB",
-    "Zope >= 4.0b5",
+    "Zope >= 5",
 ]
 keywords = [
     "Zope",
