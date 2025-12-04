@@ -4,6 +4,8 @@ Changelog
 8.2 (unreleased)
 ----------------
 
+- Move package metadata from setup.py to pyproject.toml.
+
 
 8.1 (2025-11-19)
 ----------------
